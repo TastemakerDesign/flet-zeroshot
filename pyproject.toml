@@ -1,0 +1,58 @@
+[project]
+name = "flet-zeroshot"
+version = "0.0.1"
+requires-python = ">=3.11"
+dependencies = [
+    "flet>=1.0.4",
+    "flet-camera>=1.0.4",
+    "flet-permission-handler>=1.0.4",
+    "matplotlib>=3.10.9,<3.11",
+    "onnxruntime==1.27.0",
+    "opencv-python>=5.0.0.93",
+    "tokenizers==0.23.1",
+]
+[dependency-groups]
+dev = [
+    "flet-cli>=1.0.4",
+    "pyright>=1.1.414",
+    "ruff>=0.17.1",
+]
+
+[tool.flet]
+org = "com.tastemakerdesign.FletZeroShot"
+product = "flet-zeroshot"
+company = "Tastemaker Design"
+copyright = "Copyright (C) 2026 Tastemaker Design"
+permissions = ["camera"]
+
+[tool.flet.app]
+path = "src"
+
+# Needed to fix the issue reported at https://github.com/flet-dev/flet/issues/6874
+[tool.flet.template]
+url = "flet-build-template"
+
+[tool.flet.ios]
+team_id = ""
+export_method = ""
+provisioning_profile = ""
+signing_certificate = ""
+
+[tool.flet.android]
+dependencies = ["sqlite"]
+
+# Needed to fix following error when running the development server: "TypeError: FastAPI.__init__() got an unexpected keyword argument 'openapi_prefix'"
+[tool.uv]
+constraint-dependencies = ["fastapi<0.145"]
+
+[tool.pyright]
+typeCheckingMode = "standard"
+exclude = ["build", ".venv", "**/__pycache__", "flet-build-template"]
+
+[tool.ruff]
+line-length = 120
+extend-exclude = ["flet-build-template"]
+
+[tool.ruff.lint]
+extend-select = ["TID252"]
+ignore = ["BLE001", "S110", "N999"]
